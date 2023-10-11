@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ClayInGame.unity
+    path: Assets/1. Scenes/ClayInGame.unity
     guid: 9bb81e27803a93f4183059c649b3b274
   m_configObjects: {}
