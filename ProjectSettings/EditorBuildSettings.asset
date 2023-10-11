@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ClayInGame.unity
+    guid: 9bb81e27803a93f4183059c649b3b274
   m_configObjects: {}
