@@ -22,7 +22,7 @@ public class UserController : MonoBehaviour
 
     private void JoyControl()
     {
-        //회전값에 제한을 줘야된다
+        //회전값에 제한을 줘야된다 //아직 안줌
         fRotX -= fixJoy.Vertical * fRotSpeed;
         fRotY += fixJoy.Horizontal * fRotSpeed;
 
