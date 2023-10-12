@@ -5,18 +5,16 @@ using UnityEngine;
 public class ClaySpawner : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] spawnPoints;
+    private Transform[] m_trSpawnPoints;
 
     void Awake()
     {
-        spawnPoints = GetComponentsInChildren<Transform>();
+        m_trSpawnPoints = GetComponentsInChildren<Transform>();
     }
 
-    public GameObject SpawnClay(int i_spawnIndex)
+    public Transform GetSpawnPoint(int i_spawnIndex)
     {
-        GameObject clay = GameManagerInClay.gm.clayPool.GetClay();
-        clay.transform.position = spawnPoints[i_spawnIndex].transform.position;
-
-        return clay;
+        Transform spawnPoint = m_trSpawnPoints[i_spawnIndex];
+        return spawnPoint;
     }
 }
