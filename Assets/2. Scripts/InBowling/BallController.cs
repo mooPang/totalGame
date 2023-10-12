@@ -39,6 +39,7 @@ public class BallController : MonoBehaviour
         {
             canDrag = false;
             rb.AddForce(goForward * force, ForceMode.Impulse);
+            //rb.AddTorque  //회전    //시네루
 
             if (force == 0)
                 Debug.LogError("Ball power is 0, please input Force power on Ball Inspector");
