@@ -39,16 +39,24 @@ public class GameManagerInClay : MonoBehaviour
 
     public void SpawnClay(int i_SpawnCnt)
     {
-        GameObject intantClay = claySpawner.SpawnClay(i_SpawnCnt);
+        //스폰위치 장소 여기서 지정하고
+        GameObject intantClay = clayPool.GetClay();
 
-        StartCoroutine(ShotClay(intantClay));
+        int intantRandomNum = UnityEngine.Random.Range(1, 3);
+        Transform intantPoint = claySpawner.GetSpawnPoint(intantRandomNum);
+
+        //클레이 위치를 초기화
+        intantClay.transform.position = intantPoint.position;
+
+        StartCoroutine(ShotClay(intantClay, intantPoint));
     }
 
-    IEnumerator ShotClay(GameObject i_goClay) 
+    IEnumerator ShotClay(GameObject i_goClay, Transform i_trSpawnPoint) 
     {
         //날아가는 각도 및 힘 조절함
         GameObject intantClay = i_goClay;
-        Vector3 clayVec = intantClay.transform.forward;
+        //스포너의 forward로 하겠슴
+        Vector3 clayVec = i_trSpawnPoint.forward;
         clayVec.x += UnityEngine.Random.Range(-0.6f, 0.6f);
         clayVec.y = 0.40f;
         Rigidbody clayRigid = intantClay.GetComponent<Rigidbody>();
@@ -56,7 +64,7 @@ public class GameManagerInClay : MonoBehaviour
         int iRanPow = UnityEngine.Random.Range(60, 80);
 
         clayRigid.AddForce(clayVec * iRanPow, ForceMode.Impulse);   // 날아가는 힘
-        clayRigid.AddTorque(Vector3.back * 70, ForceMode.Impulse);    // 회전력 줌
+        clayRigid.AddTorque(Vector3.up * 70, ForceMode.Impulse);    // 회전력 줌
 
         yield return null;
     }
