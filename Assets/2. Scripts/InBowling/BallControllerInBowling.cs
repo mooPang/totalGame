@@ -2,13 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BallController : MonoBehaviour
+public class BallControllerInBowling : MonoBehaviour
 {
     [HideInInspector]
     public bool canDrag;
 
-    public int force = 200; //기본 파워 200     //게이지로 변경할수도
+
+    private Vector3 initBallSpot;
+
+    private void Awake()
+    {
+        initBallSpot = transform.position;
+    }
 
     void Start()
     {
@@ -17,11 +24,15 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        Shoot(gameObject);
+        if (transform.position.sqrMagnitude == 0)
+        {
+            Debug.LogError("멈춤!");
+        }
+
+        DragBall(gameObject);
     }
 
-    //슈팅했을 때
-    void Shoot(GameObject go)
+    void DragBall(GameObject go)
     {
         Rigidbody rb = go.GetComponent<Rigidbody>();
         Vector3 goForward = go.transform.forward;
@@ -33,19 +44,9 @@ public class BallController : MonoBehaviour
             if (hit.transform == transform)
                 canDrag = true;
 
-            Debug.LogError("HOLD ON");
         }
         else if (Input.GetMouseButtonUp(0))
-        {
             canDrag = false;
-            rb.AddForce(goForward * force, ForceMode.Impulse);
-            //rb.AddTorque  //회전    //시네루
-
-            if (force == 0)
-                Debug.LogError("Ball power is 0, please input Force power on Ball Inspector");
-            else
-                Debug.LogError("SHOOT!! ==== POWER : " + force);
-        }
 
         if (canDrag)
         {
@@ -54,18 +55,7 @@ public class BallController : MonoBehaviour
 
             transform.position = new Vector3(worldPosition.x, 1f, worldPosition.z);
         }
-        //if (Input.GetMouseButton(0))
-        //{
-        //    Debug.LogError("HOLD ON");
-        //}
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    Debug.LogError("SHOOT!!");
-
-        //    rb.AddForce(goForward * 100, ForceMode.Impulse);
-        //}
     }
-
     private RaycastHit CastRay()
     {
         // 마우스 커서가 가리키는 카메라가 랜더링하는 가장 먼곳의 위치 ScreenPoint Vector3 position
@@ -92,5 +82,18 @@ public class BallController : MonoBehaviour
 
         // 정보를 가진 hit 반환
         return hit;
+    }
+
+    public void Shoot()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        Vector3 goForward = gameObject.transform.forward;
+        rb.AddForce(goForward * GameManagerInBowling.instance.shootingForce, ForceMode.Impulse);
+    }
+
+    public void ResetAllThing()
+    {
+        gameObject.transform.position = initBallSpot;                   //공 위치 초기화
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;   //공 힘 초기화
     }
 }
