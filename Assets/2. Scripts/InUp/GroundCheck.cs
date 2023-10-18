@@ -13,6 +13,10 @@ public class GroundCheck : MonoBehaviour
     [Tooltip("하단에 있는 오브젝트 없애는 용도")]
     private GameObject m_goObjCut;
 
+    [SerializeField]
+    [Tooltip("모든 오브젝트 제거")]
+    private GameObject m_goAllCut;
+
     private void OnTriggerStay(Collider other)
     {
         if (m_colPrev != null)
@@ -37,10 +41,12 @@ public class GroundCheck : MonoBehaviour
             m_colPrev                   = other;
         }
 
-        if (other.gameObject.tag == "DeathGround")
+        if (m_colPrev != other && other.gameObject.tag == "DeathGround")
         {
             m_bGrounded                 = true;
             m_colPrev                   = other;
+
+            StartCoroutine(AllCutAndFirstCreateObj());
         }
     }
 
@@ -60,5 +66,18 @@ public class GroundCheck : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         m_goObjCut.gameObject.SetActive(false);
+    }
+
+    IEnumerator AllCutAndFirstCreateObj()
+    {
+        m_goAllCut.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        m_goAllCut.SetActive(false);
+
+        yield return new WaitForSeconds(1.0f);
+
+        GameManagerInUp.gm.CreateObj(GameManagerInUp.gm.m_iCreateNum);
     }
 }

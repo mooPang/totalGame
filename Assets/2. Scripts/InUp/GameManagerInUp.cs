@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
@@ -34,6 +35,15 @@ public class GameManagerInUp : MonoBehaviour
     [SerializeField]
     private Transform m_trUser;
 
+    [Tooltip("새로운 기록")]
+    public float m_fNewRecord;
+
+    [Tooltip("현재 기록")]
+    public float m_fCurRecord;
+
+    [SerializeField]
+    private TMP_Text m_txtNewRecord;
+
     public struct SELECTPOSNUM
     {
         public int iSelectNum;
@@ -42,7 +52,6 @@ public class GameManagerInUp : MonoBehaviour
 
     SELECTPOSNUM sSelectPos;
     public List<SELECTPOSNUM> m_listSelectNum;
-
 
     private void Awake()
     {
@@ -68,9 +77,6 @@ public class GameManagerInUp : MonoBehaviour
             sSelectPos.bSelected = false;
             m_listSelectNum.Add(sSelectPos);
         }
-
-        //시작하자마다 오브젝트 생성
-        CreateObj(m_iCreateNum);
     }
 
     private void Update()
@@ -82,6 +88,8 @@ public class GameManagerInUp : MonoBehaviour
             //CreateObj(m_iCreateNum, m_iObjMoveSpd);
             m_fTimer = 0.0f;
         }
+
+        m_txtNewRecord.text = Mathf.FloorToInt(NewRecordCheck()).ToString();
     }
 
     public void CreateObj(int i_iCreateNum)  //스폰 생성
@@ -124,5 +132,17 @@ public class GameManagerInUp : MonoBehaviour
             tempSelNum.bSelected = false;
             m_listSelectNum[idx] = tempSelNum;
         }
+    }
+
+    private float NewRecordCheck()
+    {
+        m_fCurRecord = m_trUser.position.y - 1.0f;
+
+        if (m_fCurRecord > m_fNewRecord)
+        {
+            m_fNewRecord = m_fCurRecord;
+        }
+
+        return m_fNewRecord;
     }
 }
