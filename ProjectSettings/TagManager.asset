@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Clay
+  - Ground
+  - Object
+  - DeathGround
   layers:
   - Default
   - TransparentFX
