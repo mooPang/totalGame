@@ -6,19 +6,35 @@ public class SoundManagerInUp : MonoBehaviour
 {
     public static SoundManagerInUp sm;
 
+    public enum AUDIO
+    {
+        JUMP,
+        CLEAR,
+        _MAX_
+    }
+
     [SerializeField]
     private List<AudioClip> AudioClips;
 
-    public Dictionary<int, AudioSource> m_mapAudio;
+    private Dictionary<AUDIO, AudioClip> m_mapAudio;
 
-    public enum AUDIO
-    {
-        
-    }
 
     private void Awake()
     {
         sm = this;
+
+        m_mapAudio = new Dictionary<AUDIO, AudioClip>();
+
+        for (int idx = 0; idx < AudioClips.Count; idx++)
+        {
+            m_mapAudio.Add((AUDIO)idx, AudioClips[idx]);
+        }
+    }
+
+
+    public AudioClip GetAudioClip(AUDIO eAduio)
+    {
+        return m_mapAudio[eAduio];
     }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManagerInClay : MonoBehaviour
@@ -12,10 +13,27 @@ public class GameManagerInClay : MonoBehaviour
 
     private float m_fTimer;
 
+    [SerializeField]
+    private TMP_Text m_txtCurTime;      //남은 시간 텍스트
+
+    private float m_fInitTime;          //초기시간
+    private float m_fCurTime;           //현재남은 시간
+    private int m_iMinute;              //분
+    private int m_iSecond;              //초
+
+    [SerializeField]
+    private TMP_Text m_txtScore;        //점수 텍스트
+    private int m_iScore;               //점수
+
+    private AudioSource m_asScoreSnd;   //스코어 사운드
+
     private void Awake()
     {
         gm = this;
         m_fTimer = 0.0f;
+        m_fInitTime = 90.0f;
+        m_fCurTime = 0.0f;
+        m_asScoreSnd = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -23,6 +41,10 @@ public class GameManagerInClay : MonoBehaviour
         UpdateClaySpawn();
     }
 
+    private void Start()
+    {
+        StartCoroutine(StartTimer());
+    }
 
     private void UpdateClaySpawn()
     {
@@ -67,5 +89,38 @@ public class GameManagerInClay : MonoBehaviour
         clayRigid.AddTorque(Vector3.up * 70, ForceMode.Impulse);    // 회전력 줌
 
         yield return null;
+    }
+
+    IEnumerator StartTimer()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        m_fCurTime = m_fInitTime;
+
+        while(m_fCurTime > 0)
+        {
+            m_fCurTime -= Time.deltaTime;
+            m_iMinute = (int)m_fCurTime / 60;
+            m_iSecond = (int)m_fCurTime % 60;
+            m_txtCurTime.text = m_iMinute.ToString("00") + ":" + m_iSecond.ToString("00");
+            yield return null;
+
+            if (m_fCurTime <= 0)
+            {
+                Debug.Log("시간 끝");
+                m_fCurTime = 0;
+                yield break;
+            }
+        }
+    }
+
+    public void UpdateScore()
+    {
+        m_iScore += 100;
+
+        m_txtScore.text = m_iScore.ToString();
+
+        m_asScoreSnd.clip = SoundManagerInClay.sm.GetAudioClip(SoundManagerInClay.AUDIO.SCORE);
+        m_asScoreSnd.Play();
     }
 }

@@ -43,9 +43,12 @@ public class UserControllerInUp : MonoBehaviour
     [SerializeField]
     private Transform m_trCutPoint;
 
+    private AudioSource m_asJumpSound;
+
     private void Awake()
     {
         m_rigidUser = GetComponent<Rigidbody>();
+        m_asJumpSound = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -99,6 +102,9 @@ public class UserControllerInUp : MonoBehaviour
     {
         m_bJumpKey = false;
         m_bActiveJump = true;
+
+        m_asJumpSound.clip = SoundManagerInUp.sm.GetAudioClip(SoundManagerInUp.AUDIO.JUMP);
+        m_asJumpSound.Play();
     }
 
     private void OnGageJumpPower()

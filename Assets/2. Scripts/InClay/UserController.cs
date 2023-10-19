@@ -20,11 +20,36 @@ public class UserController : MonoBehaviour
     private float m_fRotMinY = -60; //Y축 회전 최소값
     private float m_fRotMaxY = 60;  //Y축 회전 최대값
     private float m_fRotMinX = -45; //X축 회전 최소값
-    private float m_fRotMaxX = 0;  //X축 회전 최대값
+    private float m_fRotMaxX = 5;  //X축 회전 최대값
+
+    //총알 및 장전관련 변수
+    private int m_iCurBullet;       //현재 남은탄
+    private float m_fReloadTime;    //리로드 시간
+    private bool m_bReloding;       //리로딩 불값
+
+    [SerializeField]
+    private GameObject m_goReload;  //리로드 텍스트오브젝트
+    [SerializeField]
+    private GameObject m_goGun;
+    
+
+    private Animator m_animGun;
+    [SerializeField]
+    private GameObject m_goAimPoint;
+
+    private AudioSource m_asGunSnd;
 
     private void Awake()
     {
         m_fRotX = m_fRotY = 0;
+        m_animGun = m_goGun.GetComponent<Animator>();
+        m_asGunSnd = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        m_iCurBullet = 2;
+        m_fReloadTime = 1.5f;
     }
 
     private void Update()
@@ -34,9 +59,6 @@ public class UserController : MonoBehaviour
         {
             StartCoroutine(Shooting());
         }
-
-        //Debug용
-        //OnDrawRayLine();
     }
 
     private void FixedUpdate()
@@ -68,15 +90,33 @@ public class UserController : MonoBehaviour
 
     IEnumerator Shooting()
     {
+        if(m_bReloding)
+        {
+            //리로딩중이라 커트
+            yield break;
+        }
+
+        m_asGunSnd.clip = SoundManagerInClay.sm.GetAudioClip(SoundManagerInClay.AUDIO.FIRE);
+        m_asGunSnd.Play();
+
+        m_animGun.SetTrigger("trShoot");
+
+        m_iCurBullet--;
+
+        if(m_iCurBullet <= 0)
+        {
+            StartCoroutine(ReloadAction());
+        }
+
         Vector3 vecAimDir = m_aimPoint.transform.position - m_aimer.transform.position;
 
         if(Physics.Raycast(m_aimer.transform.position, vecAimDir, out m_clayHitInfo, m_fhitDistance, m_lmClay))
         {
-            //여기도 맞았으면 뭔가를 해줘야됨
-            Debug.Log("맞았다");
-
             //맞춘 클레이 비활성화하기
             m_clayHitInfo.transform.gameObject.SetActive(false);
+
+            //점수추가
+            GameManagerInClay.gm.UpdateScore();
 
             //사운드 추가
             //이펙트 추가
@@ -85,18 +125,36 @@ public class UserController : MonoBehaviour
         yield return null;
     }
 
-    public void OnDrawRayLine()
+    public void OnClickShoot()
     {
-        Transform trAimer = m_aimer.transform;
-        Vector3 vecAimDir = m_aimPoint.transform.position - m_aimer.transform.position;
+        StartCoroutine(Shooting());
+    }
 
-        if (m_clayHitInfo.collider != null)
-        {
-            Debug.DrawLine(trAimer.position, trAimer.position + vecAimDir * m_clayHitInfo.distance, Color.red);
-        }
-        else
-        {
-            Debug.DrawLine(trAimer.position, trAimer.position + vecAimDir * m_fhitDistance, Color.white);
-        }
+    IEnumerator ReloadAction()
+    {
+        m_bReloding = true;
+        m_animGun.SetTrigger("trReload");
+        m_goAimPoint.SetActive(false);
+
+        yield return new WaitForSeconds(0.3f);
+
+        m_goReload.SetActive(true);
+        m_asGunSnd.clip = SoundManagerInClay.sm.GetAudioClip(SoundManagerInClay.AUDIO.RELOAD);
+
+        yield return new WaitForSeconds(0.5f);
+        m_asGunSnd.Play();
+        m_asGunSnd.loop = true;
+
+        yield return new WaitForSeconds(0.8f);
+        m_asGunSnd.Stop();
+        m_asGunSnd.loop = false;
+
+        yield return new WaitForSeconds(m_fReloadTime);
+
+        m_animGun.SetTrigger("trReady");
+        m_bReloding = false;
+        m_goReload.SetActive(false);
+        m_goAimPoint.SetActive(true);
+        m_iCurBullet = 2;
     }
 }

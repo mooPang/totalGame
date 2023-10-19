@@ -6,6 +6,13 @@ public class FinalObject : MonoBehaviour
 {
     private float m_fTimer;
 
+    private AudioSource m_asClearSnd;
+
+    private void Awake()
+    {
+        m_asClearSnd = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         m_fTimer = Time.deltaTime;
@@ -20,9 +27,18 @@ public class FinalObject : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            gameObject.SetActive(false);
+            StartCoroutine(EndisableObject());
 
             //게임 클리어 외치기
+            m_asClearSnd.clip = SoundManagerInUp.sm.GetAudioClip(SoundManagerInUp.AUDIO.CLEAR);
+            m_asClearSnd.Play();
         }
+    }
+
+    IEnumerator EndisableObject()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        gameObject.SetActive(false);
     }
 }
