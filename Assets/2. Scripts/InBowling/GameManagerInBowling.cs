@@ -24,6 +24,7 @@ public class GameManagerInBowling : MonoBehaviour
     private int shootingChance = 0;
     private int maxForce = 500;      //슈팅 최대 파워
     private bool isShoot;
+    
     [HideInInspector]
     public int downNumber = 0;       //쓰러진 개수
     private int prevScore = 0;
@@ -105,10 +106,7 @@ public class GameManagerInBowling : MonoBehaviour
     {
         isClick = false;
         ClickButtonUp();
-
-        
     }
-
 
     public void ClickButtonDown()
     {
@@ -118,8 +116,11 @@ public class GameManagerInBowling : MonoBehaviour
         if (shootingChance < 1)
             ActiveSlider();
 
-        audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.GUAGE);
-        audioSource.Play();
+        if (!audioSource.isPlaying && !isShoot)
+        {
+            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.GUAGE);
+            audioSource.Play();
+        }
     }
 
     public void ClickButtonUp()
@@ -255,7 +256,6 @@ public class GameManagerInBowling : MonoBehaviour
             }
         }
     }
-
 
     void RoundChange()
     {
