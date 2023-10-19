@@ -104,7 +104,6 @@ public class BallControllerInBowling : MonoBehaviour
 
         if ((other.gameObject.layer == LayerMask.NameToLayer("PinBodyCol_Bowling")))
         {
-            Debug.LogError("Ãæµ¹");
             audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.CRASH);
             audioSource.Play();
 

@@ -31,6 +31,8 @@ public class GameManagerInCardMatch : MonoBehaviour
     {
         audioSource.clip = SoundManagerInCardMatch.instance.GetAudioClip(CardGameSoundState.START);
         audioSource.Play();
+
+        DataManager.Instance.LoadGameData(GameKind.CARDMATCH);
     }
 
     void Update()
@@ -95,6 +97,10 @@ public class GameManagerInCardMatch : MonoBehaviour
             audioSource.Play();
 
             Time.timeScale = 0;     //타이머 및 작동 스톱
+
+            Debug.LogError(Time.time.ToString());
+
+            DataManager.Instance.SaveGameData(GameKind.CARDMATCH, Time.time.ToString(), false);
         }
     }
 }

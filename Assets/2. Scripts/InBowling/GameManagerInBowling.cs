@@ -72,6 +72,7 @@ public class GameManagerInBowling : MonoBehaviour
     {
         currentRound = 1;
         currentRoundTrial = 1;
+        DataManager.Instance.LoadGameData(GameKind.BOWLING);
     }
 
     void Update()
@@ -79,7 +80,6 @@ public class GameManagerInBowling : MonoBehaviour
         currentTime += Time.deltaTime;
         CheckIsDown();  //다 쓰러졌는지 확인
 
-        //ShootingController();
         if (isClick)
         {
             clickTime += Time.deltaTime;
@@ -297,6 +297,9 @@ public class GameManagerInBowling : MonoBehaviour
         {
             if (noMoreTrial) //게임 종료
             {
+                DataManager.Instance.SaveGameData(GameKind.BOWLING, stackTotalScore.ToString(), true);
+                //Time.timeScale = 0;
+                //Debug.LogError("stackTotalScore : " + stackTotalScore);
                 return;
             }
 
