@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/1. Scenes/Load.unity
+    guid: 49754a87fd4dfe04cbf43fe914571ede
+  - enabled: 1
+    path: Assets/1. Scenes/Main.unity
+    guid: 5573bd6f37432e9448f8af62fd39fd05
+  - enabled: 1
+    path: Assets/1. Scenes/BowlingScene.unity
+    guid: 1456e17af5688d94cb5d9d022713550d
+  - enabled: 1
+    path: Assets/1. Scenes/CardMatchScene.unity
+    guid: 73f44417db91475488f98650163b16bc
+  - enabled: 1
     path: Assets/1. Scenes/ClayInGame.unity
     guid: 9bb81e27803a93f4183059c649b3b274
+  - enabled: 1
+    path: Assets/1. Scenes/UpInGame.unity
+    guid: 784b4a553c76a6f49b1253c4e79d57b4
   m_configObjects: {}
