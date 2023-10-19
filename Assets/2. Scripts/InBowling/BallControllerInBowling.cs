@@ -9,12 +9,15 @@ public class BallControllerInBowling : MonoBehaviour
     [HideInInspector]
     public bool canDrag;
 
+    private bool isCrash;
 
     private Vector3 initBallSpot;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         initBallSpot = transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -24,11 +27,6 @@ public class BallControllerInBowling : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.sqrMagnitude == 0)
-        {
-            Debug.LogError("멈춤!");
-        }
-
         DragBall(gameObject);
     }
 
@@ -95,5 +93,22 @@ public class BallControllerInBowling : MonoBehaviour
     {
         gameObject.transform.position = initBallSpot;                   //공 위치 초기화
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;   //공 힘 초기화
+        isCrash = false;
+    }
+
+    //충돌할 때마다 여기 탐
+    void OnCollisionEnter(Collision other)
+    {
+        if (isCrash)
+            return;
+
+        if ((other.gameObject.layer == LayerMask.NameToLayer("PinBodyCol_Bowling")))
+        {
+            Debug.LogError("충돌");
+            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.CRASH);
+            audioSource.Play();
+
+            isCrash = true;
+        }
     }
 }

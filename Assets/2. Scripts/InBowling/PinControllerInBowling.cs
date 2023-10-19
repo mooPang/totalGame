@@ -11,7 +11,7 @@ public class PinControllerInBowling : MonoBehaviour
     /// </summary>
 
     [HideInInspector]
-    private GameObject pinCollider;
+    public GameObject pinCollider;
     
     [Tooltip("«… µ¶ √÷√  ¿ßƒ°")]
     private Vector3 initSpot;

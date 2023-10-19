@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
-enum State
+public enum BowlingState
 {
     NORMAL,
     SPARE,
@@ -47,10 +47,12 @@ public class GameManagerInBowling : MonoBehaviour
     private float clickTime = 0;
     private bool isClick;
 
+    private AudioSource audioSource;
+
     [Tooltip("연속 스트라이크 회수 체크용")]
     private int feverTime = 0;
 
-    private State eState;
+    private BowlingState eState;
 
     [HideInInspector]
     public int shootingForce = 0;
@@ -61,7 +63,8 @@ public class GameManagerInBowling : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        eState = State.NORMAL;
+        eState = BowlingState.NORMAL;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -102,6 +105,8 @@ public class GameManagerInBowling : MonoBehaviour
     {
         isClick = false;
         ClickButtonUp();
+
+        
     }
 
 
@@ -112,6 +117,9 @@ public class GameManagerInBowling : MonoBehaviour
 
         if (shootingChance < 1)
             ActiveSlider();
+
+        audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.GUAGE);
+        audioSource.Play();
     }
 
     public void ClickButtonUp()
@@ -123,32 +131,9 @@ public class GameManagerInBowling : MonoBehaviour
             shootingChance++;
             currentTime = 0f;
         }
+
+        audioSource.Stop();
     }
-
-    //void ShootingController()
-    //{
-    //    if (Input.GetKey(KeyCode.Space))
-    //    {
-    //        if (shootingForce < maxForce)    //maxForce 500
-    //            shootingForce++;
-
-    //        if (shootingChance < 1)
-    //        {
-    //            ActiveSlider();
-    //        }
-    //    }
-
-    //    if (Input.GetKeyUp(KeyCode.Space))
-    //    {
-    //        if (shootingChance < 1) //2번 눌러서 공 계속 날아가는 것 막음
-    //        {
-    //            isShoot = true;
-    //            ballObject.GetComponent<BallControllerInBowling>().Shoot();
-    //            shootingChance++;
-    //            currentTime = 0f;
-    //        }
-    //    }
-    //}
 
     void ActiveSlider()
     {
@@ -195,7 +180,7 @@ public class GameManagerInBowling : MonoBehaviour
                 {
                     if (feverTime >= 2) //더블이나 터키면
                     {
-                        eState = State.STRIKE;
+                        eState = BowlingState.STRIKE;
                     }
                 }
 
@@ -204,13 +189,13 @@ public class GameManagerInBowling : MonoBehaviour
 
                 if (finalTrialOnLastRound != 3)
                 {
-                    eState = State.STRIKE;  // 상태 바꿔준다
+                    eState = BowlingState.STRIKE;  // 상태 바꿔준다
                     feverTime++;
 
                     if (feverTime == 2)
-                        eState = State.DOUBLE;
+                        eState = BowlingState.DOUBLE;
                     else if (feverTime >= 3)
-                        eState = State.TURKEY;
+                        eState = BowlingState.TURKEY;
                 }
             }
             else
@@ -218,7 +203,7 @@ public class GameManagerInBowling : MonoBehaviour
                 if (feverTime >= 3) //터키 치고 다음 라운드 1시도 때 스트라이크 못친 경우
                 {
                     feverTime = 2;
-                    eState = State.DOUBLE;
+                    eState = BowlingState.DOUBLE;
                 }
 
                 if (finalTrialOnLastRound == 3)
@@ -232,7 +217,7 @@ public class GameManagerInBowling : MonoBehaviour
                 {
                     finalTrialOnLastRound++;
                     if (finalTrialOnLastRound == 3)
-                        eState = State.NORMAL;
+                        eState = BowlingState.NORMAL;
 
                     feverTime = 0;
                 }
@@ -253,9 +238,9 @@ public class GameManagerInBowling : MonoBehaviour
                 RoundChange();
 
                 if (finalTrialOnLastRound != 3)
-                    eState = State.SPARE;
+                    eState = BowlingState.SPARE;
                 else
-                    eState = State.NORMAL;
+                    eState = BowlingState.NORMAL;
 
                 feverTime = 0;
             }
@@ -265,12 +250,10 @@ public class GameManagerInBowling : MonoBehaviour
                     noMoreTrial = true;
 
                 RoundChange();
-                eState = State.NORMAL;
+                eState = BowlingState.NORMAL;
                 feverTime = 0;
             }
         }
-
-        //Debug.LogError("상태 : " + eState);
     }
 
 
@@ -284,31 +267,26 @@ public class GameManagerInBowling : MonoBehaviour
         {
             switch (eState)
             {
-                case State.NORMAL:
+                case BowlingState.NORMAL:
                     break;
 
-                case State.SPARE:
+                case BowlingState.SPARE:
                     stackTotalScore += firstTrialScore;
                     break;
 
-                case State.STRIKE:
+                case BowlingState.STRIKE:
                     stackTotalScore += (firstTrialScore + secondTrialScore);
                     break;
 
-                case State.DOUBLE:
+                case BowlingState.DOUBLE:
                     stackTotalScore += (firstTrialScore + secondTrialScore + firstTrialScore);
                     break;
 
-                case State.TURKEY:
+                case BowlingState.TURKEY:
                     stackTotalScore += (firstTrialScore + secondTrialScore + firstTrialScore + secondTrialScore);
                     break;
             }
         }
-        //Debug.LogError("1 : " + firstTrialScore);
-        //Debug.LogError("2 : " + secondTrialScore);
-        //Debug.LogError("라운드 토탈점수 : " + stackTotalScore);
-
-        //UITextController(); //UI 변경
 
         //라운드 체인지
         if (currentRound < totalRound)
@@ -319,14 +297,13 @@ public class GameManagerInBowling : MonoBehaviour
         {
             if (noMoreTrial) //게임 종료
             {
-                //Debug.LogError("최종점수 : " + stackTotalScore);
                 return;
             }
 
             finalTrialOnLastRound++;
 
             if (finalTrialOnLastRound == 3)
-                eState = State.NORMAL;
+                eState = BowlingState.NORMAL;
         }
 
 

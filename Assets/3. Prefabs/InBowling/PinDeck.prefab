@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3945213002235128226}
   - component: {fileID: 5625690964878454148}
   - component: {fileID: 7958338032778518803}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 5409515815034682703}
   - component: {fileID: 5104341390427485913}
   - component: {fileID: 298923152147115339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &943968646037642120
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &1048075990009540965
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 1716165494829029545}
   - component: {fileID: 7976257228834587743}
   - component: {fileID: 1605027916370780755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 4359169182474650359}
   - component: {fileID: 8772675607620507840}
   - component: {fileID: 201523341594468925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &1393326984474335095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &1699732973481961160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 6996512620679661283}
   - component: {fileID: 7495455203453471193}
   - component: {fileID: 6545591577744083067}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &1995421430464941861
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &3801669821382288422
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +2253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &4405221053196676743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,7 +2374,7 @@ GameObject:
   - component: {fileID: 254094518567723041}
   - component: {fileID: 8142079729930181488}
   - component: {fileID: 403528236755025201}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2773,7 +2773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &5453886139151848499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,7 +2892,7 @@ GameObject:
   - component: {fileID: 4281606724361323428}
   - component: {fileID: 6896113608840737108}
   - component: {fileID: 2355344783524793355}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3081,7 +3081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &6552407991708525983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3200,7 +3200,7 @@ GameObject:
   - component: {fileID: 3076990217255979077}
   - component: {fileID: 9189211168275123196}
   - component: {fileID: 5437317535965760858}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3601,7 +3601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce9367732b1944cb494fabd6287038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalCount: 0
+  pinCollider: {fileID: 0}
 --- !u!1 &7303505279072395880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3932,7 +3932,7 @@ GameObject:
   - component: {fileID: 8278249986069064079}
   - component: {fileID: 6918160477951339404}
   - component: {fileID: 1975129847559408594}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4068,7 +4068,7 @@ GameObject:
   - component: {fileID: 1914644587683769026}
   - component: {fileID: 7101518015585708220}
   - component: {fileID: 8567248303372524308}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pin (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
