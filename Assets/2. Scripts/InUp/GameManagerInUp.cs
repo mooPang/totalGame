@@ -145,4 +145,9 @@ public class GameManagerInUp : MonoBehaviour
 
         return m_fNewRecord;
     }
+
+    public void GameClear()
+    {
+        Time.timeScale = 0.0f;
+    }
 }

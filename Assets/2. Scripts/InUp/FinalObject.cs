@@ -16,6 +16,7 @@ public class FinalObject : MonoBehaviour
     private void Start()
     {
         m_fTimer = Time.deltaTime;
+        OnChangeVolume();
     }
 
     void FixedUpdate()
@@ -32,6 +33,9 @@ public class FinalObject : MonoBehaviour
             //게임 클리어 외치기
             m_asClearSnd.clip = SoundManagerInUp.sm.GetAudioClip(SoundManagerInUp.AUDIO.CLEAR);
             m_asClearSnd.Play();
+
+            //게임 끝
+            GameManagerInUp.gm.GameClear();
         }
     }
 
@@ -40,5 +44,24 @@ public class FinalObject : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         gameObject.SetActive(false);
+    }
+
+    public void OnChangeVolume()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+
+        if (DataManager.instance.data != null)
+        {
+            float iVolume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100f;
+
+            if (m_asClearSnd.volume != iVolume)
+            {
+                m_asClearSnd.volume = iVolume;
+            }
+        }
+        else
+        {
+            m_asClearSnd.volume = 1;
+        }
     }
 }

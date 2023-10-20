@@ -1279,6 +1279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 673401292}
   - component: {fileID: 673401293}
+  - component: {fileID: 673401294}
   m_Layer: 0
   m_Name: BGM
   m_TagString: Untagged
@@ -1397,6 +1398,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &673401294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673401291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0324519b06f9a99459bf5fa6adb01ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &794080075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,16 +2845,44 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1230280669}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 673401294}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnChangeSoundValue
       objectReference: {fileID: 0}
     - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnChangeVlaue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UIManagerInMain, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MainSound, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640610232150860627, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6150556803812350983, guid: 8fe07ca3dfccb9542946a6eb5889e013, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

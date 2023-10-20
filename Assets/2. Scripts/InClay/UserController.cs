@@ -50,6 +50,7 @@ public class UserController : MonoBehaviour
     {
         m_iCurBullet = 2;
         m_fReloadTime = 1.5f;
+        OnChangeVolume();
     }
 
     private void Update()
@@ -159,5 +160,24 @@ public class UserController : MonoBehaviour
         m_goReload.SetActive(false);
         m_goAimPoint.SetActive(true);
         m_iCurBullet = 2;
+    }
+
+    public void OnChangeVolume()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+
+        if (DataManager.instance.data != null)
+        {
+            float iVolume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100f;
+
+            if (m_asGunSnd.volume != iVolume)
+            {
+                m_asGunSnd.volume = iVolume;
+            }
+        }
+        else
+        {
+            m_asGunSnd.volume = 1;
+        }
     }
 }

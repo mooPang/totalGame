@@ -51,6 +51,11 @@ public class UserControllerInUp : MonoBehaviour
         m_asJumpSound = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        OnChangeVolume();
+    }
+
     private void Update()
     {
         JumpAndGravity();
@@ -118,6 +123,25 @@ public class UserControllerInUp : MonoBehaviour
 
             if (m_fCurJumpPow >= m_fMaxJumpPow)
                 m_fCurJumpPow = m_fMaxJumpPow;
+        }
+    }
+
+    public void OnChangeVolume()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+
+        if (DataManager.instance.data != null)
+        {
+            float iVolume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100f;
+
+            if (m_asJumpSound.volume != iVolume)
+            {
+                m_asJumpSound.volume = iVolume;
+            }
+        }
+        else
+        {
+            m_asJumpSound.volume = 1;
         }
     }
 }

@@ -36,14 +36,15 @@ public class GameManagerInClay : MonoBehaviour
         m_asScoreSnd = GetComponent<AudioSource>();
     }
 
-    private void Update()
-    {
-        UpdateClaySpawn();
-    }
-
     private void Start()
     {
         StartCoroutine(StartTimer());
+        OnChangeVolume();
+    }
+
+    private void Update()
+    {
+        UpdateClaySpawn();
     }
 
     private void UpdateClaySpawn()
@@ -129,5 +130,24 @@ public class GameManagerInClay : MonoBehaviour
 
         m_asScoreSnd.clip = SoundManagerInClay.sm.GetAudioClip(SoundManagerInClay.AUDIO.SCORE);
         m_asScoreSnd.Play();
+    }
+
+    public void OnChangeVolume()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+
+        if (DataManager.instance.data != null)
+        {
+            float iVolume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100f;
+
+            if (m_asScoreSnd.volume != iVolume)
+            {
+                m_asScoreSnd.volume = iVolume;
+            }
+        }
+        else
+        {
+            m_asScoreSnd.volume = 1;
+        }
     }
 }
