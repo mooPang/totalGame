@@ -54,7 +54,7 @@ public class CardControllerInCardMatch : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!isFlipping && !isFlipped)  //현재카드가 뒤집혀지지 않고, 현재 카드가 매치가 되지 않고
+        if (!isFlipping && !isFlipped && UIManager.Instance.IsActivePause() == false)  //현재카드가 뒤집혀지지 않고, 현재 카드가 매치가 되지 않고, 일시정지 아닐 때
             GameManagerInCardMatch.instance.CardClicked(this);
 
         //뒷면이 보여지고 있다면 뒤집어 볼 수 있고, 앞면이 보여지고 있을 때는 마우스 클릭으로는 뒤집지 못하고, 겜매에서 파악해서 매치되지 않는 경우에만 원복되도록
