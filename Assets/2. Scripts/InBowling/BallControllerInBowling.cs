@@ -27,7 +27,8 @@ public class BallControllerInBowling : MonoBehaviour
 
     void Update()
     {
-        DragBall(gameObject);
+        if (!UIManager.Instance.IsActivePause()) //일시정지 아닐 때만 공 드래그 되도록
+            DragBall(gameObject);
     }
 
     void DragBall(GameObject go)
