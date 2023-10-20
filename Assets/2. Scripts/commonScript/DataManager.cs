@@ -61,7 +61,7 @@ public class DataManager : MonoBehaviour
     {
         string directoryPath = Application.persistentDataPath + "/" + gameKind.ToString();  //게임마다 폴더 생성
         string filePath = directoryPath + "/" + GameDataFileName;
-
+        
         if (!Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
@@ -79,6 +79,8 @@ public class DataManager : MonoBehaviour
 
     public void SaveGameData(GameKind gameKind, string strData, bool isDesc = false)
     {
+        LoadGameData(gameKind); //다른 데이터 덮어지기 전에 걸맞는 데이터 불러옴
+
         if (gameKind != GameKind.SOUND)
         {
             OrderbyDesc(gameKind, strData, isDesc);

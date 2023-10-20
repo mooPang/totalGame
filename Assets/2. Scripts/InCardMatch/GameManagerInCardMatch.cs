@@ -6,19 +6,15 @@ using UnityEngine;
 
 public class GameManagerInCardMatch : MonoBehaviour
 {
-
-    public static GameManagerInCardMatch instance;
-
-    private CardControllerInCardMatch flippedCard;
-        
-    public TMP_Text timeText;
-
-    private bool isFinished;
-
     [SerializeField]
     public List<int> cardIdList;  //game over 위한 ID체크용
 
+    public static GameManagerInCardMatch instance;
+    private CardControllerInCardMatch flippedCard;
+    public TMP_Text timeText;
     private AudioSource audioSource;
+    private float newTime;
+    private bool isFinished;
 
     private void Awake()
     {
@@ -29,10 +25,16 @@ public class GameManagerInCardMatch : MonoBehaviour
 
     void Start()
     {
+        DataManager.Instance.LoadGameData(GameKind.CARDMATCH);
+
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+        if (DataManager.instance.data.recordDataList.Count != 0)
+            audioSource.volume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100;    //volume : 0 ~ 1
+        else
+            audioSource.volume = 1;
+
         audioSource.clip = SoundManagerInCardMatch.instance.GetAudioClip(CardGameSoundState.START);
         audioSource.Play();
-
-        DataManager.Instance.LoadGameData(GameKind.CARDMATCH);
     }
 
     void Update()
@@ -82,7 +84,8 @@ public class GameManagerInCardMatch : MonoBehaviour
 
     private void CheckTime()
     {
-        timeText.text = "Time : " + Time.time.ToString("N2");
+        newTime += Time.deltaTime;
+        timeText.text = "Time : " + newTime.ToString("N2");
     }
 
     private void CheckFinishedGame()
@@ -98,9 +101,16 @@ public class GameManagerInCardMatch : MonoBehaviour
 
             Time.timeScale = 0;     //타이머 및 작동 스톱
 
-            Debug.LogError(Time.time.ToString());
-
             DataManager.Instance.SaveGameData(GameKind.CARDMATCH, Time.time.ToString(), false);
         }
+    }
+
+    public void ChangeSound()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+        if (DataManager.instance.data.recordDataList.Count != 0)
+            audioSource.volume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100;    //volume : 0 ~ 1
+        else
+            audioSource.volume = 1;
     }
 }

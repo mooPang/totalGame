@@ -81,6 +81,12 @@ public class GameManagerInBowling : MonoBehaviour
         DataManager.Instance.LoadGameData(GameKind.BOWLING);
         shootBtnClickNum = 0;
 
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+        if (DataManager.instance.data.recordDataList.Count != 0)
+            audioSource.volume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100;    //volume : 0 ~ 1
+        else
+            audioSource.volume = 1;
+
         audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.START);
         audioSource.Play();
     }
@@ -121,9 +127,6 @@ public class GameManagerInBowling : MonoBehaviour
         {
             powerGuageBar.gameObject.SetActive(false);
             directionBar.gameObject.SetActive(true);
-            
-            //방향 업데이트 돌리고
-            //CheckDirectionBySlider();   //디렉션 바 좌우 이동 시작
         }
         else if (shootBtnClickNum == 2)     //방향 설정
         {
@@ -135,15 +138,11 @@ public class GameManagerInBowling : MonoBehaviour
                 ballObject.GetComponent<BallControllerInBowling>().Shoot(); //게이지 다음으로 빼자
                 shootingChance++;
                 currentTime = 0f;
-
             }
         }
 
         //따로 동작할 버튼들
         audioSource.Stop();
-
-        ////디렉션 바 재생
-        //ActiveDirectionBar();
     }
 
     public void ClickButtonDown()
@@ -160,30 +159,6 @@ public class GameManagerInBowling : MonoBehaviour
             audioSource.Play();
         }
     }
-
-    //public void PowerGaugeButtonUp()    //게이지 업 버튼
-    //{
-    //    if (shootingChance < 1) //2번 눌러서 공 계속 날아가는 것 막음
-    //    {
-    //        isShoot = true;
-    //        //공 날아가기 전에 방향 설정해줘야함
-    //        //DirectionBarLogic(); //디렉션 바 재생
-    //        //한번 더 슈팅
-    //        //ballObject.GetComponent<BallControllerInBowling>().Shoot(); //게이지 다음으로 빼자
-    //        //shootingChance++;
-    //        //currentTime = 0f;
-    //    }
-
-    //    //audioSource.Stop();
-    //}
-
-    //public void ActiveDirectionBar()
-    //{
-    //    powerGuageBar.gameObject.SetActive(false);
-    //    directionBar.gameObject.SetActive(true);
-
-    //    CheckDirectionBySlider();
-    //}
 
     void ActivePowerSlider()
     {
@@ -353,12 +328,10 @@ public class GameManagerInBowling : MonoBehaviour
             if (noMoreTrial) //게임 종료
             {
                 DataManager.Instance.SaveGameData(GameKind.BOWLING, stackTotalScore.ToString(), true);      //게임 기록 저장
-
                 audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.FINISH);   //FINISH 사운드 플레이
                 audioSource.Play();
 
                 Time.timeScale = 0; //동작 멈춤
-                //Debug.LogError("stackTotalScore : " + stckTotalScore);
                 return;
             }
 
@@ -379,5 +352,14 @@ public class GameManagerInBowling : MonoBehaviour
         firstTrialScore = 0;
         secondTrialScore = 0;
         currentRoundTrial = 1;
+    }
+
+    public void ChangeSound()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+        if (DataManager.instance.data.recordDataList.Count != 0)
+            audioSource.volume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100;    //volume : 0 ~ 1
+        else
+            audioSource.volume = 1;
     }
 }

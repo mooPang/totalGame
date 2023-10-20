@@ -148,4 +148,13 @@ public class BallControllerInBowling : MonoBehaviour
             transform.position = initBallSpot;
         }
     }
+
+    public void ChangeSound()
+    {
+        DataManager.Instance.LoadGameData(GameKind.SOUND);
+        if (DataManager.instance.data.recordDataList.Count != 0)
+            audioSource.volume = float.Parse(DataManager.instance.data.recordDataList[0]) / 100;    //volume : 0 ~ 1
+        else
+            audioSource.volume = 1;
+    }
 }
