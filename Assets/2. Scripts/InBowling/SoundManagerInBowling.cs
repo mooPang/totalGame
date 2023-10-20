@@ -4,10 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 //ÀÌ³Ñ -> Å°
-public enum bowlingSoundState
+public enum BowlingSoundState
 {
     GUAGE,
-    CRASH
+    CRASH,
+    START,
+    FINISH
 }
 
 public class SoundManagerInBowling : MonoBehaviour
@@ -17,7 +19,7 @@ public class SoundManagerInBowling : MonoBehaviour
     [SerializeField]
     private List<AudioClip> soundList = new List<AudioClip>();
 
-    private Dictionary<bowlingSoundState, AudioClip> soundDic = new Dictionary<bowlingSoundState, AudioClip>();
+    private Dictionary<BowlingSoundState, AudioClip> soundDic = new Dictionary<BowlingSoundState, AudioClip>();
 
     private void Awake()
     {
@@ -39,11 +41,11 @@ public class SoundManagerInBowling : MonoBehaviour
     {
         for (int i = 0; i < soundList.Count; i++) 
         {
-            soundDic.Add((bowlingSoundState)i, soundList[i]);
+            soundDic.Add((BowlingSoundState)i, soundList[i]);
         }
     }
 
-    public AudioClip GetAudioClip(bowlingSoundState bowlingState)
+    public AudioClip GetAudioClip(BowlingSoundState bowlingState)
     {
         return soundDic[bowlingState];
     }

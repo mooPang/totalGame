@@ -93,6 +93,7 @@ public class BallControllerInBowling : MonoBehaviour
     {
         gameObject.transform.position = initBallSpot;                   //공 위치 초기화
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;   //공 힘 초기화
+        GameManagerInBowling.instance.shootingBtnImage.color = new Color32(255, 163, 0, 255);   //버튼색 활성화 색으로 원복
         isCrash = false;
     }
 
@@ -104,7 +105,7 @@ public class BallControllerInBowling : MonoBehaviour
 
         if ((other.gameObject.layer == LayerMask.NameToLayer("PinBodyCol_Bowling")))
         {
-            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.CRASH);
+            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.CRASH);
             audioSource.Play();
 
             isCrash = true;

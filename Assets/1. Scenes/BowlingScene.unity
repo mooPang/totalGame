@@ -2139,6 +2139,8 @@ MonoBehaviour:
   soundList:
   - {fileID: 8300000, guid: 00ef0ce264f9d9642930696a3735d582, type: 3}
   - {fileID: 8300000, guid: 5bb86db9b92c1fe4ba1220b57cceebae, type: 3}
+  - {fileID: 8300000, guid: a9eb8fdd897131d4993afa3a933be7a9, type: 3}
+  - {fileID: 8300000, guid: b2ef9960e6a953c45ae8a5c1c63f89ad, type: 3}
 --- !u!1 &286588388
 GameObject:
   m_ObjectHideFlags: 0
@@ -12274,6 +12276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballObject: {fileID: 369981179}
   shootingBtn: {fileID: 833969337}
+  shootingBtnImage: {fileID: 0}
   eachPinObject:
   - {fileID: 265603127}
   - {fileID: 265603126}
@@ -12292,7 +12295,8 @@ MonoBehaviour:
   secondTrialScore: 0
   stackTotalScore: 0
   shootingForce: 0
-  forceUI: {fileID: 1153619086}
+  powerGuageBar: {fileID: 1153619086}
+  directionBar: {fileID: 140085698}
 --- !u!4 &2040977404
 Transform:
   m_ObjectHideFlags: 0

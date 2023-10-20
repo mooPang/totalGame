@@ -19,6 +19,8 @@ public class GameManagerInBowling : MonoBehaviour
     public static GameManagerInBowling instance;
     public GameObject ballObject;
     public Button shootingBtn;
+    [HideInInspector]
+    public Image shootingBtnImage;
     public PinControllerInBowling[] eachPinObject = new PinControllerInBowling[10];
     private float currentTime = 0f;
     private int shootingChance = 0;
@@ -59,13 +61,17 @@ public class GameManagerInBowling : MonoBehaviour
     public int shootingForce = 0;
 
     [SerializeField]
-    private Slider forceUI;
+    private Slider powerGuageBar;   //init : active(True)
+
+    [SerializeField]
+    private Slider directionBar;    //init : active(False)
 
     private void Awake()
     {
         instance = this;
         eState = BowlingState.NORMAL;
         audioSource = GetComponent<AudioSource>();
+        shootingBtnImage = shootingBtn.GetComponent<Image>();
     }
 
     private void Start()
@@ -73,6 +79,9 @@ public class GameManagerInBowling : MonoBehaviour
         currentRound = 1;
         currentRoundTrial = 1;
         DataManager.Instance.LoadGameData(GameKind.BOWLING);
+
+        audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.START);
+        audioSource.Play();
     }
 
     void Update()
@@ -80,7 +89,7 @@ public class GameManagerInBowling : MonoBehaviour
         currentTime += Time.deltaTime;
         CheckIsDown();  //다 쓰러졌는지 확인
 
-        if (isClick)
+        if (isClick && Time.timeScale != 0)
         {
             clickTime += Time.deltaTime;
             ClickButtonDown();
@@ -105,7 +114,11 @@ public class GameManagerInBowling : MonoBehaviour
     public void ButtonUp()
     {
         isClick = false;
-        ClickButtonUp();
+        shootingBtnImage.color = Color.gray;    //슛하고 나면 gray처리로 비활성화 느낌주기
+        PowerGaugeButtonUp();
+
+        //디렉션 바 재생
+        DirectionBarLogic();
     }
 
     public void ClickButtonDown()
@@ -118,17 +131,17 @@ public class GameManagerInBowling : MonoBehaviour
 
         if (!audioSource.isPlaying && !isShoot)
         {
-            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(bowlingSoundState.GUAGE);
+            audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.GUAGE);
             audioSource.Play();
         }
     }
 
-    public void ClickButtonUp()
+    public void PowerGaugeButtonUp()
     {
         if (shootingChance < 1) //2번 눌러서 공 계속 날아가는 것 막음
         {
             isShoot = true;
-            ballObject.GetComponent<BallControllerInBowling>().Shoot();
+            ballObject.GetComponent<BallControllerInBowling>().Shoot(); //게이지 다음으로 빼자
             shootingChance++;
             currentTime = 0f;
         }
@@ -136,9 +149,15 @@ public class GameManagerInBowling : MonoBehaviour
         audioSource.Stop();
     }
 
+    public void DirectionBarLogic()
+    {
+        //powerGuageBar.gameObject.SetActive(false);
+        //directionBar.gameObject.SetActive(true);
+    }
+
     void ActiveSlider()
     {
-        forceUI.value = shootingForce;
+        powerGuageBar.value = shootingForce;
     }
 
     void CheckIsDown()
@@ -160,7 +179,7 @@ public class GameManagerInBowling : MonoBehaviour
             currentTime = 0f;
             shootingChance = 0;
             shootingForce = 0;
-            forceUI.value = 0;
+            powerGuageBar.value = 0;
             isShoot = false;
         }
     }
@@ -199,7 +218,7 @@ public class GameManagerInBowling : MonoBehaviour
                         eState = BowlingState.TURKEY;
                 }
             }
-            else
+            else    //스트라이크 못 치면
             {
                 if (feverTime >= 3) //터키 치고 다음 라운드 1시도 때 스트라이크 못친 경우
                 {
@@ -218,7 +237,10 @@ public class GameManagerInBowling : MonoBehaviour
                 {
                     finalTrialOnLastRound++;
                     if (finalTrialOnLastRound == 3)
+                    {
+                        noMoreTrial = true; //
                         eState = BowlingState.NORMAL;
+                    }
 
                     feverTime = 0;
                 }
@@ -297,9 +319,13 @@ public class GameManagerInBowling : MonoBehaviour
         {
             if (noMoreTrial) //게임 종료
             {
-                DataManager.Instance.SaveGameData(GameKind.BOWLING, stackTotalScore.ToString(), true);
-                //Time.timeScale = 0;
-                //Debug.LogError("stackTotalScore : " + stackTotalScore);
+                DataManager.Instance.SaveGameData(GameKind.BOWLING, stackTotalScore.ToString(), true);      //게임 기록 저장
+
+                audioSource.clip = SoundManagerInBowling.instance.GetAudioClip(BowlingSoundState.FINISH);   //FINISH 사운드 플레이
+                audioSource.Play();
+
+                Time.timeScale = 0; //동작 멈춤
+                //Debug.LogError("stackTotalScore : " + stckTotalScore);
                 return;
             }
 
