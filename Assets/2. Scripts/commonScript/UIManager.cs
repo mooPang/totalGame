@@ -33,14 +33,35 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        if(Time.timeScale == 0 && !IsActivePause())
+        {
+            OnActiveGameOverMenu();
+        }
+    }
+
     public void OnClickPauseBtn()
     {
+        if (IsActivePause()) return;
+
         GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
 
         goPauseMenu.SetActive(true);
 
         m_strCurSceneName = SceneManager.GetActiveScene().name;
         Time.timeScale = 0.0f;
+    }
+
+    public bool IsActivePause()
+    {
+        bool isActive = false;
+
+        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
+
+        isActive = goPauseMenu.activeSelf;
+
+        return isActive;
     }
 
     public void OnClickContinueBtn()
@@ -54,6 +75,14 @@ public class UIManager : MonoBehaviour
     public void OnClickRestartBtn()
     {
         Time.timeScale = 1.0f;
+
+        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
+        GameObject goContinue = goPauseMenu.transform.Find("ContinueBtn").gameObject;
+        goContinue.SetActive(true);
+
+        GameObject goPauseTxt = goPauseMenu.transform.Find("PauseTxt").gameObject;
+        goPauseTxt.GetComponent<Text>().text = "일시 정지";
+
         SceneManager.LoadSceneAsync(m_strCurSceneName);
     }
 
@@ -107,6 +136,28 @@ public class UIManager : MonoBehaviour
     public void OnClickMenuBtn()
     {
         Time.timeScale = 1.0f;
+
+        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
+        GameObject goContinue = goPauseMenu.transform.Find("ContinueBtn").gameObject;
+        goContinue.SetActive(true);
+
+        GameObject goPauseTxt = goPauseMenu.transform.Find("PauseTxt").gameObject;
+        goPauseTxt.GetComponent<Text>().text = "일시 정지";
+
         SceneManager.LoadScene("Main");
+    }
+
+    public void OnActiveGameOverMenu()
+    {
+        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
+        goPauseMenu.SetActive(true);
+
+        GameObject goPauseTxt = goPauseMenu.transform.Find("PauseTxt").gameObject;
+        goPauseTxt.GetComponent<Text>().text = "게임 종료";
+
+        GameObject goContinue = goPauseMenu.transform.Find("ContinueBtn").gameObject;
+        goContinue.SetActive(false);
+
+        m_strCurSceneName = SceneManager.GetActiveScene().name;
     }
 }

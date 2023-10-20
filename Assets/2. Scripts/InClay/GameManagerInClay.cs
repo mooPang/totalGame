@@ -54,6 +54,8 @@ public class GameManagerInClay : MonoBehaviour
         {
             int iRanIndex = UnityEngine.Random.Range(1, 3);
             SpawnClay(iRanIndex);
+            m_asScoreSnd.clip = SoundManagerInClay.sm.GetAudioClip(SoundManagerInClay.AUDIO.CLAYFIRE);
+            m_asScoreSnd.Play();
 
             m_fTimer = 0.0f;
         }
@@ -109,6 +111,11 @@ public class GameManagerInClay : MonoBehaviour
             {
                 Debug.Log("½Ã°£ ³¡");
                 m_fCurTime = 0;
+                Time.timeScale = 0;
+
+                DataManager.Instance.LoadGameData(GameKind.CLAY);
+                DataManager.Instance.SaveGameData(GameKind.CLAY, m_txtScore.text, true);
+
                 yield break;
             }
         }

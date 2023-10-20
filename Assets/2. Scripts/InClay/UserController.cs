@@ -57,13 +57,15 @@ public class UserController : MonoBehaviour
         //우선 스페이스 나중에 버튼눌렀을때 연동해줘야됨
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(Shooting());
+            if(!UIManager.Instance.IsActivePause())
+                StartCoroutine(Shooting());
         }
     }
 
     private void FixedUpdate()
     {
-        JoyControl();
+        if (!UIManager.Instance.IsActivePause())
+            JoyControl();
     }
 
     private void JoyControl()
@@ -127,7 +129,8 @@ public class UserController : MonoBehaviour
 
     public void OnClickShoot()
     {
-        StartCoroutine(Shooting());
+        if (!UIManager.Instance.IsActivePause())
+            StartCoroutine(Shooting());
     }
 
     IEnumerator ReloadAction()

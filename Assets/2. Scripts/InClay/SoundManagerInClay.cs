@@ -11,6 +11,7 @@ public class SoundManagerInClay : MonoBehaviour
         SCORE,
         RELOAD,
         FIRE,
+        CLAYFIRE,
         _MAX_
     }
 

@@ -52,6 +52,7 @@ public class DataManager : MonoBehaviour
     string GameDataFileName = "GameDataFile.json";  //게임 데이터 파일 이름 설정
 
     public GameSavingData data = new GameSavingData();    //저장용 클래스 변수
+    private GameSavingData zeroData = new GameSavingData(); //빈 클래스 변수
 
     /// <summary>
     /// LoadGame
@@ -73,7 +74,7 @@ public class DataManager : MonoBehaviour
             data = JsonUtility.FromJson<GameSavingData>(fromJsonData);  //불러옴
         }
         else
-            data = null;
+            data = zeroData;
     }
 
     public void SaveGameData(GameKind gameKind, string strData, bool isDesc = false)
