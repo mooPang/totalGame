@@ -12,12 +12,22 @@ public class BallControllerInBowling : MonoBehaviour
     private bool isCrash;
 
     private Vector3 initBallSpot;
+
+    public GameObject DirectionNavi;
     private AudioSource audioSource;
+
+    private float timeForAngle;
+    private float circularMotionSpeed;  //원운동 속도
+
+    private int minus = -1;
+    private float result = 0f;
+
 
     private void Awake()
     {
         initBallSpot = transform.position;
         audioSource = GetComponent<AudioSource>();
+        circularMotionSpeed = 100;
     }
 
     void Start()
@@ -29,6 +39,8 @@ public class BallControllerInBowling : MonoBehaviour
     {
         if (!UIManager.Instance.IsActivePause()) //일시정지 아닐 때만 공 드래그 되도록
             DragBall(gameObject);
+
+        FixShootDirection();
     }
 
     void DragBall(GameObject go)
@@ -92,6 +104,7 @@ public class BallControllerInBowling : MonoBehaviour
 
     public void ResetAllThing()
     {
+        //circularMotionSpeed = 0;
         gameObject.transform.position = initBallSpot;                   //공 위치 초기화
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;   //공 힘 초기화
         GameManagerInBowling.instance.shootingBtnImage.color = new Color32(255, 163, 0, 255);   //버튼색 활성화 색으로 원복
@@ -110,6 +123,29 @@ public class BallControllerInBowling : MonoBehaviour
             audioSource.Play();
 
             isCrash = true;
+        }
+    }
+
+    private void FixShootDirection()
+    {
+        timeForAngle += Time.deltaTime * minus * 10;
+        result += Time.deltaTime * circularMotionSpeed * minus;
+
+        if (timeForAngle > 5)
+            minus = -1;
+
+        if (timeForAngle < -5)
+            minus = 1;
+
+        transform.rotation = Quaternion.Euler(0, result, 0);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("BallActiveZone_Bowling") && !GameManagerInBowling.instance.isShoot)
+        {
+            canDrag = false;
+            transform.position = initBallSpot;
         }
     }
 }

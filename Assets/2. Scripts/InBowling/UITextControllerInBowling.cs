@@ -32,10 +32,10 @@ public class UITextControllerInBowling : MonoBehaviour
 
     void UITextController()
     {
-        CurrentRoundTxt.text = "[" + GameManagerInBowling.instance.currentRound.ToString() + "R/10R]";
-        FirstScoreTxt.text = "1st Score : " + GameManagerInBowling.instance.firstTrialScore.ToString();
-        SecondScoreTxt.text = "2nd Score : " + GameManagerInBowling.instance.secondTrialScore.ToString();
-        //ThirdScoreTxt.text = "3rd Score : " + GameManagerInBowling.instance..ToString();
-        TotalScoreTxt.text = "Total Score : " + GameManagerInBowling.instance.stackTotalScore.ToString();
+        CurrentRoundTxt.text = "  [" + GameManagerInBowling.instance.currentRound.ToString() + "R/10R]";
+        FirstScoreTxt.text = "  1st Score : " + GameManagerInBowling.instance.firstTrialScore.ToString();
+        SecondScoreTxt.text = "  2nd Score : " + GameManagerInBowling.instance.secondTrialScore.ToString();
+        //ThirdScoreTxt.text = "  3rd Score : " + GameManagerInBowling.instance..ToString();
+        TotalScoreTxt.text = "  Total Score : " + GameManagerInBowling.instance.stackTotalScore.ToString();
     }
 }
