@@ -45,8 +45,10 @@ public class UIManager : MonoBehaviour
     {
         if (IsActivePause()) return;
 
-        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
+        GameObject goPauseBG = GameObject.Find("Canvas").transform.Find("PauseBG").gameObject;
+        goPauseBG.SetActive(true);
 
+        GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
         goPauseMenu.SetActive(true);
 
         m_strCurSceneName = SceneManager.GetActiveScene().name;
@@ -66,6 +68,9 @@ public class UIManager : MonoBehaviour
 
     public void OnClickContinueBtn()
     {
+        GameObject goPauseBG = GameObject.Find("Canvas").transform.Find("PauseBG").gameObject;
+        goPauseBG.SetActive(false);
+
         GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
         goPauseMenu.SetActive(false);
 
@@ -149,6 +154,9 @@ public class UIManager : MonoBehaviour
 
     public void OnActiveGameOverMenu()
     {
+        GameObject goPauseBG = GameObject.Find("Canvas").transform.Find("PauseBG").gameObject;
+        goPauseBG.SetActive(true);
+
         GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
         goPauseMenu.SetActive(true);
 
