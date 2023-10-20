@@ -71,10 +71,9 @@ public class DataManager : MonoBehaviour
             string fromJsonData = File.ReadAllText(filePath);   //저장경로
 
             data = JsonUtility.FromJson<GameSavingData>(fromJsonData);  //불러옴
-
-            if (data != null)
-                Debug.LogError(data.recordDataList[0]);
         }
+        else
+            data = null;
     }
 
     public void SaveGameData(GameKind gameKind, string strData, bool isDesc = false)
@@ -82,6 +81,10 @@ public class DataManager : MonoBehaviour
         if (gameKind != GameKind.SOUND)
         {
             OrderbyDesc(gameKind, strData, isDesc);
+        }
+        else
+        {
+            AddData(strData);
         }
 
         string filePath = Application.persistentDataPath + "/" + gameKind.ToString() + "/" + GameDataFileName;
@@ -111,5 +114,14 @@ public class DataManager : MonoBehaviour
         {
             data.recordDataList.RemoveAt(data.recordDataList.Count - 1);
         }
+    }
+
+    public void AddData(string strData)
+    {
+        List<string> newList = new List<string>();
+
+        newList.Add(strData);
+
+        data.recordDataList = newList;
     }
 }
