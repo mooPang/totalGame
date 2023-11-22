@@ -920,6 +920,7 @@ PlayerSettings:
   vrEditorSettings: {}
   cloudServicesEnabled:
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -939,11 +940,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: d98d749d-ed39-41e4-91c3-4ea2b30c7865
+  cloudProjectId: 666bea2f-e099-4ebc-b1c6-c8a04dec2c61
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: totalGame (1)
-  organizationId: codending
+  organizationId: procendp
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -23,11 +23,6 @@ public class GameBoardInCardMatch : MonoBehaviour
         InitGameBoard();
     }
 
-    void Update()
-    {
-
-    }
-
     void GenerateCardID()
     {
         for (int i = 0; i < cardSprites.Length; i++)

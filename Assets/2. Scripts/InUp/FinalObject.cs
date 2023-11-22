@@ -36,6 +36,10 @@ public class FinalObject : MonoBehaviour
 
             //게임 끝
             GameManagerInUp.gm.GameClear();
+
+            //전면 광고 추가
+            GoogleMobileVideoAdsScript.instance.LoadInterstitialAd();
+            GoogleMobileVideoAdsScript.instance.ShowAd();
         }
     }
 

@@ -332,6 +332,10 @@ public class GameManagerInBowling : MonoBehaviour
                 audioSource.Play();
 
                 Time.timeScale = 0; //µø¿€ ∏ÿ√„
+
+                //¿¸∏È ±§∞Ì √ﬂ∞°
+                GoogleMobileVideoAdsScript.instance.LoadInterstitialAd();
+                GoogleMobileVideoAdsScript.instance.ShowAd();
                 return;
             }
 

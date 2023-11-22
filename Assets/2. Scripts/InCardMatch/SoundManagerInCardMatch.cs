@@ -23,16 +23,6 @@ public class SoundManagerInCardMatch : MonoBehaviour
         AddSoundDic();
     }
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     void AddSoundDic()
     {
         for (int i = 0; i < soundList.Count; i++)

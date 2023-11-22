@@ -91,7 +91,10 @@ public class GameManagerInCardMatch : MonoBehaviour
     private void CheckFinishedGame()
     {
         if (isFinished)
+        {
+            Time.timeScale = 0;     //타이머 및 작동 스톱
             return;
+        }
 
         if (cardIdList.Count == 0)  //카드 다 매칭되면
         {
@@ -102,6 +105,10 @@ public class GameManagerInCardMatch : MonoBehaviour
             Time.timeScale = 0;     //타이머 및 작동 스톱
 
             DataManager.Instance.SaveGameData(GameKind.CARDMATCH, Time.time.ToString(), false);
+
+            //전면 광고 추가
+            GoogleMobileVideoAdsScript.instance.LoadInterstitialAd();
+            GoogleMobileVideoAdsScript.instance.ShowAd();
         }
     }
 

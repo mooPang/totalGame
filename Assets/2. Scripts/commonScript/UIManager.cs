@@ -81,6 +81,9 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
 
+        //아래 m_strCurSceneName 못 불러올 때 대비해서 한 번 더 인식
+        m_strCurSceneName = SceneManager.GetActiveScene().name;
+
         GameObject goPauseMenu = GameObject.Find("Canvas").transform.Find("PauseMenu").gameObject;
         GameObject goContinue = goPauseMenu.transform.Find("ContinueBtn").gameObject;
         goContinue.SetActive(true);

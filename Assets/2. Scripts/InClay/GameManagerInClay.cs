@@ -117,6 +117,10 @@ public class GameManagerInClay : MonoBehaviour
                 DataManager.Instance.LoadGameData(GameKind.CLAY);
                 DataManager.Instance.SaveGameData(GameKind.CLAY, m_txtScore.text, true);
 
+                //전면 광고 추가
+                GoogleMobileVideoAdsScript.instance.LoadInterstitialAd();
+                GoogleMobileVideoAdsScript.instance.ShowAd();
+
                 yield break;
             }
         }
